@@ -63,3 +63,19 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'simplecov'
 end
+
+# Pagenation
+gem 'kaminari'
+
+# Rubocop
+group :development do
+  gem 'rubocop', require: false
+  gem 'rubocop-rspec', require: false
+end
+
+# Material Design
+gem 'materialize-sass',  github: "mkhairi/materialize-sass"
+
+# Utility for view
+gem 'show_for'
+gem 'simple_form'
