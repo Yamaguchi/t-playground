@@ -79,3 +79,6 @@ gem 'materialize-sass',  github: "mkhairi/materialize-sass"
 # Utility for view
 gem 'show_for'
 gem 'simple_form'
+
+# Templating engine
+gem 'slim-rails'
