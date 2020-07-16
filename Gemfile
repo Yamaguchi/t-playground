@@ -82,3 +82,5 @@ gem 'simple_form'
 
 # Templating engine
 gem 'slim-rails'
+# Tapyrus
+gem 'tapyrus', '>=0.2.1'
