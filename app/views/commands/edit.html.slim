@@ -1,0 +1,41 @@
+.container
+  h2 = @command.name
+  .row
+    .col.s12.m12
+      = @command.summary
+  .row
+    .col.s12.m12
+      .card-panel
+        .blue-text.text-darken-2 = @command.signature
+  - unless @command.parameters.empty?
+    h5 Arguments:
+  .row
+    .col.s12.m12
+      = form_tag @command, method: :put do
+        - @command.parameters.each.with_index do |param, i|
+          .inputs
+            = label_tag param.name, param.name
+            = text_field_tag "command_params[#{i}]"
+
+        .actions.center
+          button type='submit' class='btn waves-effect waves-light'
+            = 'execute'
+          = link_to 'clear', edit_command_path(@command), class: 'btn waves-effect waves-light'
+  - if @error
+    ul
+      li code
+      li = @error['code']
+      li message
+      li = @error['message']
+  - if @result
+    h5 Result:
+    .row
+      .col.s12.m12
+        .card-panel
+          .blue-text.text-darken-2 = @result
+  h5 Help:
+  .row
+    .col.s12.m12
+      .card.blue-grey.darken-1.z-depth-3
+        .card-content.white-text.truncate
+          pre[style='overflow:scroll;'] = @command.description

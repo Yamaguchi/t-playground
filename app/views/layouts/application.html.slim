@@ -1,0 +1,28 @@
+doctype html
+html
+  head
+    title = t('.name')
+    meta content="text/html; charset=UTF-8" http-equiv="Content-Type" /
+    meta content="width=device-width, initial-scale=1, maximum-scale=1.0" name="viewport" /
+    meta content="/" name="turbolinks-root"
+    meta name="turbolinks-cache-control" content="no-preview"
+    = csrf_meta_tags
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+    = toast
+  body
+    header.navbar
+      nav
+        .nav-wrapper
+          a#sidenav href="/" data-target="slide-out" class="button-collapse sidenav-trigger show-on-large" data-turbolinks="false"
+            i class="material-icons" Tapyrus Playground
+
+    aside
+      = render "layouts/sidebar"
+
+    main
+      = yield(:jumbotron) if content_for?(:jumbotron)
+      == yield
+
+    footer.page-footer class="#{@color}"
+      = render "layouts/footer"

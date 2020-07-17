@@ -24,33 +24,52 @@ lines.each do |line|
     category = m[:category]
     categories << category
   else
-    command_name = line.split(" ").first
-    commands << [command_name, category]
+    command = line.split(" ")
+    commands << { name: command.first, category: category }
   end
 end
 
 parameters = {}
-description = {}
-commands.each do |(command_name, category)|
-  help = client.help(command_name)
-  description[command_name] = help
-  lines = help.split("\n")
-  parameters[command_name] = []
-  section = nil
+commands.each do |command|
+  response = client.help(command[:name])
+  command[:description] = response
+
+  lines = response.split("\n")
+  parameters[command[:name]] = []
+  section = :signature
 
   lines.each do |line|
-    next if line.empty?
+    if line.empty?
+      case section
+      when :signature
+        section = :summary
+      end
+      next
+    end
 
     if /^Arguments/.match(line)
       section = :arguments
+      next
     elsif /^Result/.match(line)
       section = :result
+      next
+    elsif /^Examples/.match(line)
+      section = :examples
+      next
     end
 
-    if section == :arguments
+    case section
+    when :signature
+      command[:signature] = line
+    when :summary
+      command[:summary] ||= ''
+      command[:summary] += line + "\n"
+    when :arguments
       if m = /^\d\. *(?<parameter>[\w\"\[\]\(\)]*) *(?<description>.*)$/.match(line)
-        parameters[command_name] << [m[:parameter], m[:description]]
+        parameters[command[:name]] << [m[:parameter], m[:description]]
       end
+    when :result
+    when :examples
     end
   end
 end
@@ -59,20 +78,21 @@ categories.each do |category_name|
   Category.create(name: category_name)
 end
 
-commands.each do |(command_name, category)|
-  command = Command.create(
-    name: command_name, 
-    category: Category.find_by(name: category), 
-    description: description[command_name]
+commands.each do |command|
+  record = Command.create(
+    name: command[:name], 
+    category: Category.find_by(name: command[:category]), 
+    description: command[:description],
+    summary: command[:summary],
+    signature: command[:signature],
   )
 
-  command_parameters = parameters[command_name]
+  command_parameters = parameters[command[:name]]
   command_parameters.each.with_index do |(parameter, description), index|
     description = description.gsub(/^ */,"").gsub(/ *$/, "")
     parameter = parameter.gsub(/[\"\\]/,"")
-    Parameter.create(name: parameter, index: index + 1, description: description, command: command)
+    Parameter.create(name: parameter, index: index + 1, description: description, command: record)
   end
-  pp Parameter.all
 end
 
 
