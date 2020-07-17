@@ -29,6 +29,10 @@ class CommandsController < ApplicationController
         v
       elsif param.parameter_type == "boolean"
         (v == "true" || v == "1") ? true : false
+      elsif param.parameter_type == "array"
+        JSON.parse(v)
+      elsif param.parameter_type == "object"
+        JSON.parse(v)
       else
         v
       end

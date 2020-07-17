@@ -116,4 +116,6 @@ commands.each do |command|
   end
 end
 
+# Patch for parameter of listunspent
+Parameter.find_by(command: Command.find_by(name: 'listunspent'), index: 3).update(parameter_type: :array)
 
