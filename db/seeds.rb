@@ -65,8 +65,8 @@ commands.each do |command|
       command[:summary] ||= ''
       command[:summary] += line + "\n"
     when :arguments
-      if m = /^\d\. *(?<parameter>[\w\"\[\]\(\)]*) *(?<description>.*)$/.match(line)
-        parameters[command[:name]] << [m[:parameter], m[:description]]
+      if m = /^(?<index>\d)\. *(?<name>[\w\"\[\]\(\)]*) *(?<options>\((.*?)\)) *(?<description>.*)$/.match(line)
+        parameters[command[:name]] << { index: m[:index], name: m[:name], options: m[:options], description: m[:description] }
       end
     when :result
     when :examples
@@ -88,10 +88,31 @@ commands.each do |command|
   )
 
   command_parameters = parameters[command[:name]]
-  command_parameters.each.with_index do |(parameter, description), index|
-    description = description.gsub(/^ */,"").gsub(/ *$/, "")
-    parameter = parameter.gsub(/[\"\\]/,"")
-    Parameter.create(name: parameter, index: index + 1, description: description, command: record)
+  command_parameters.each do |parameter|
+    name = parameter[:name].gsub(/[\"\\]/,"")
+    index = parameter[:index].to_i
+    description = parameter[:description].gsub(/^ */,"").gsub(/ *$/, "")
+    options = parameter[:options]
+    description = options + " " + description
+    type = if options.include?('string')
+      :string
+    elsif options.include?('numeric') || options.include?('number')
+      :numeric
+    elsif options.include?('boolean') || options.include?('bool')
+      :boolean
+    elsif options.include?('array') || options.include?('json array')
+      :array
+    elsif options.include?('object') || options.include?('json')
+      :object
+    else
+      :none
+    end
+    required = if options.include?('required')
+      true
+    else
+      false
+    end
+    Parameter.create(name: name, index: index, parameter_type: type, required: required, description: description, command: record)
   end
 end
 

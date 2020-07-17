@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_17_053041) do
+ActiveRecord::Schema.define(version: 2020_07_17_063144) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -29,15 +29,8 @@ ActiveRecord::Schema.define(version: 2020_07_17_053041) do
     t.index ["category_id"], name: "index_commands_on_category_id"
   end
 
-  create_table "parameters", force: :cascade do |t|
-    t.string "name"
-    t.integer "index"
-    t.integer "command_id", null: false
-    t.string "description"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["command_id"], name: "index_parameters_on_command_id"
-  end
+# Could not dump table "parameters" because of following StandardError
+#   Unknown type 'bool' for column 'required'
 
   add_foreign_key "commands", "categories"
   add_foreign_key "parameters", "commands"

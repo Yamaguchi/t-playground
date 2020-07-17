@@ -14,12 +14,30 @@ class CommandsController < ApplicationController
     config = { schema: 'http', host: 'localhost', port: 12381, user: 'user', password: 'pass' }
     client = Tapyrus::RPC::TapyrusCoreClient.new(config)
 
-    command_params = params[:command_params] || {}
-    p command_params.values.map{ |v| v.empty? ? nil: v }.compact
-    @result = client.send(@command.name, *command_params.values.map{ |v| v.empty? ? nil: v }.compact)
+    command_param_hash = if params[:command_params] 
+      params[:command_params].to_unsafe_hash
+    else
+      {}
+    end
+    command_param_array = command_param_hash.map do |k, v|
+      v = v.strip
+      next nil if v.empty?
+      param = @command.parameters.find_by(index: k.to_i)
+      if param.parameter_type == "numeric"
+        v.to_i
+      elsif param.parameter_type == "string"
+        v
+      elsif param.parameter_type == "boolean"
+        (v == "true" || v == "1") ? true : false
+      else
+        v
+      end
+    end
+    @result = client.send(@command.name, *command_param_array.compact)
     render :edit
   rescue RuntimeError => e
-    @error = JSON.parse(e.message)
+    # @error = JSON.parse(e.message)
+    @error = e.message
     render :edit
   end
 end
