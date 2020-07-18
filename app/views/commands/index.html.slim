@@ -5,7 +5,7 @@
       .row
         - slice.each do |command|
           .col.s4
-            .card = link_to edit_command_path(command), class: 'card' do
+            .card = link_to command, class: 'card' do
               .card-content
                 .card-title.center-align.truncate.black-text = command.name
                 .truncate.grey-text = command.description

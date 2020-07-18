@@ -11,32 +11,32 @@
     h5 Arguments:
   .row
     .col.s12.m12
-      = form_tag @command, method: :put do
+      = form_tag command_histories_path(@command, @command_history), method: :post do
         - @command.parameters.each do |param|
           .inputs
             = label_tag param.name do 
               = param.name + " " + param.description
-            = text_field_tag "command_params[#{param.index}]"
+            = text_field_tag "command_params[#{param.index}]", (flash[:values] || {})["#{param.index}"]
 
         .actions.center
           button type='submit' class='btn waves-effect waves-light'
             = 'execute'
-          = link_to 'clear', edit_command_path(@command), class: 'btn waves-effect waves-light'
+          = link_to 'clear', @command, class: 'btn waves-effect waves-light'
   h5 Result:
   .row
     .col.s12.m12
       .card
         .card-content 
-          - if @result
+          - if flash[:result]
             .valign-wrapper.green-text
               i.material-icons done
               | Command was executed successfully.
-            = @result
-          - elsif @error
+            = flash[:result]
+          - elsif flash[:error]
             .valign-wrapper.red-text
               i.material-icons close
               | Command execution failed.
-            = @error
+            = flash[:error]
           - else
             .valign-wrapper.blue-text
               i.material-icons info
