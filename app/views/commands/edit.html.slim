@@ -22,18 +22,25 @@
           button type='submit' class='btn waves-effect waves-light'
             = 'execute'
           = link_to 'clear', edit_command_path(@command), class: 'btn waves-effect waves-light'
-  - if @error
-    h5 Error:
-    .row
-      .col.s12.m12
-        .card-panel
-          .blue-text.text-darken-2 = @error
-  - if @result
-    h5 Result:
-    .row
-      .col.s12.m12
-        .card-panel
-          .blue-text.text-darken-2 = @result
+  h5 Result:
+  .row
+    .col.s12.m12
+      .card
+        .card-content 
+          - if @result
+            .valign-wrapper.green-text
+              i.material-icons done
+              | Command was executed successfully.
+            = @result
+          - elsif @error
+            .valign-wrapper.red-text
+              i.material-icons close
+              | Command execution failed.
+            = @error
+          - else
+            .valign-wrapper.blue-text
+              i.material-icons info
+              | Fill the arguments and execute!'
   h5 Usage:
   .row
     .col.s12.m12
