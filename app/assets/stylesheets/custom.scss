@@ -27,30 +27,6 @@ nav {
   margin-bottom: 60px;
 }
 
-.main-logo {
-  height: 3rem;
-  margin-top: 0.5rem;
-}
-
-.cover {
-  background-color: $primary-color;
-}
-
-.user-view {
-  @extend .center;
-}
-
-.icon-container .icon-preview span {
-    text-align: left;
-    display: block;
-    font-size: 12px;
-}
-
-.icon-container i {
-    font-size: 3em;
-    margin-bottom: 10px;
-}
-
 .btn {
   margin-left: 10px;
 }
@@ -61,12 +37,4 @@ nav {
 }
 :not(pre) > code[class*="language-"], pre[class*="language-"] {
     background: #f5f2f0 none repeat scroll 0 0;
-}
-
-
-.toc {
-  position: sticky;
-  top: 4rem;
-  max-height: calc(100vh - 4rem);
-  overflow-y: auto;
 }
