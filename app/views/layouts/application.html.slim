@@ -14,7 +14,7 @@ html
     header.navbar
       nav
         .nav-wrapper
-          a#sidenav href="/" data-target="slide-out" class="button-collapse sidenav-trigger show-on-large" data-turbolinks="false"
+          = link_to root_path, id: "sidenav", class: 'button-collapse sidenav-trigger show-on-large', 'data-target': 'slide-out', 'data-turbolinks': false do
             i class="material-icons" Tapyrus Playground
 
     aside
