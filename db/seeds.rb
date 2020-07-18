@@ -6,8 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-# config = { schema: 'http', host: 'playground.taas.haw.biz', port: 2377, user: 'user', password: 'pass' }
-config = { schema: 'http', host: 'localhost', port: 12381, user: 'user', password: 'pass' }
+# config = { schema: 'http', host: 'localhost', port: 12381, user: 'user', password: 'pass' }
+config = { schema: 'http', host: 'playground.taas.haw.biz', port: 2377, user: 'user', password: 'pass' }
 client = Tapyrus::RPC::TapyrusCoreClient.new(config)
 
 help = client.help

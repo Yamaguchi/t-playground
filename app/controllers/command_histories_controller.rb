@@ -7,7 +7,8 @@ class CommandHistoriesController < ApplicationController
       {}
     end
 
-    config = { schema: 'http', host: 'localhost', port: 12381, user: 'user', password: 'pass' }
+    # config = { schema: 'http', host: 'localhost', port: 12381, user: 'user', password: 'pass' }
+    config = { schema: 'http', host: 'playground.taas.haw.biz', port: 2377, user: 'user', password: 'pass' }
     client = Tapyrus::RPC::TapyrusCoreClient.new(config)
 
     command_param_array = values.map do |k, v|
