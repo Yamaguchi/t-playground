@@ -104,7 +104,13 @@ commands.each do |command|
     else
       false
     end
-    Parameter.create(name: name, index: index, parameter_type: type, required: required, description: description, command: record)
+
+    default_value = if m = /default=(?<default_value>\w*)/.match(options)
+      m[:default_value]
+    else
+      nil
+    end
+    Parameter.create(name: name, index: index, parameter_type: type, required: required, default_value: default_value, description: description, command: record)
   end
 end
 

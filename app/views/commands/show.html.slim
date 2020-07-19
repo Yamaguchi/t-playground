@@ -16,7 +16,7 @@
           .inputs
             = label_tag param.name do 
               = param.name + " " + param.description
-            = text_field_tag "command_params[#{param.index}]", (flash[:values] || {})["#{param.index}"]
+            = text_field_tag "command_params[#{param.index}]", (flash[:values] || {})["#{param.index}"] || param.default_value
 
         .actions.center
           button type='submit' class='btn waves-effect waves-light'
