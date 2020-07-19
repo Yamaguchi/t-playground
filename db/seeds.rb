@@ -1,14 +1,6 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
-
-# config = { schema: 'http', host: 'localhost', port: 12381, user: 'user', password: 'pass' }
-config = { schema: 'http', host: 'playground.taas.haw.biz', port: 2377, user: 'user', password: 'pass' }
-client = Tapyrus::RPC::TapyrusCoreClient.new(config)
+yaml = Pathname.new(Rails.root.join('config', 'tapyrus.yml')) 
+config = YAML.load(ERB.new(yaml.read).result).deep_symbolize_keys
+client = Tapyrus::RPC::TapyrusCoreClient.new(config[Rails.env.to_sym])
 
 help = client.help
 lines = help.split("\n")

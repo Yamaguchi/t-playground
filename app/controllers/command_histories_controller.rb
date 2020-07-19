@@ -7,9 +7,9 @@ class CommandHistoriesController < ApplicationController
       {}
     end
 
-    # config = { schema: 'http', host: 'localhost', port: 12381, user: 'user', password: 'pass' }
-    config = { schema: 'http', host: 'playground.taas.haw.biz', port: 2377, user: 'user', password: 'pass' }
-    client = Tapyrus::RPC::TapyrusCoreClient.new(config)
+    yaml = Pathname.new(Rails.root.join('config', 'tapyrus.yml')) 
+    config = YAML.load(ERB.new(yaml.read).result).deep_symbolize_keys
+    client = Tapyrus::RPC::TapyrusCoreClient.new(config[Rails.env.to_sym])
 
     command_param_array = values.map do |k, v|
       v = v.strip

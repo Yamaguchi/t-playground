@@ -1,0 +1,23 @@
+default: &default
+  schema: http
+
+development:
+  <<: *default
+  host: localhost
+  port: 12381
+  user: user
+  password: pass
+
+test:
+  <<: *default
+  host: localhost
+  port: 12381
+  user: user
+  password: pass
+
+production:
+  <<: *default
+  host: <%= ENV['TAPYRUS_RPC_HOST'] %>
+  port: <%= ENV['TAPYRUS_RPC_PORT'] %>
+  user: <%= ENV['TAPYRUS_RPC_USER'] %>
+  password: <%= ENV['TAPYRUS_RPC_PASSWORD'] %>
