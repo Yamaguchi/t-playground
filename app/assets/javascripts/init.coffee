@@ -85,4 +85,3 @@ $(document).on 'turbolinks:load', ->
     window.location = $(this).data("link")
 
   console.log "load init on ready or turbolinks:load"
-

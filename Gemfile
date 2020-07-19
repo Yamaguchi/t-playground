@@ -16,6 +16,9 @@ gem 'puma', '~> 4.1'
 gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker', '~> 4.0'
+gem 'jquery-rails'
+# Use CoffeeScript for .coffee assets and views
+gem 'coffee-rails', '~> 5.0'
 # Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
@@ -82,6 +85,7 @@ gem 'materialize-sass',  github: "mkhairi/materialize-sass"
 # Utility for view
 gem 'show_for'
 gem 'simple_form'
+gem 'jquery-datatables'
 
 # Templating engine
 gem 'slim-rails'

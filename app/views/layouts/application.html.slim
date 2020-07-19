@@ -10,12 +10,14 @@ html
     = stylesheet_link_tag 'https://fonts.googleapis.com/icon?family=Material+Icons', media: 'all', 'data-turbolinks-track': 'reload'
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
-    = toast
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
     header.navbar
       nav
         .nav-wrapper
-          = link_to root_path, id: "sidenav", class: 'button-collapse sidenav-trigger show-on-large', 'data-target': 'slide-out', 'data-turbolinks': false do
+          a#sidenav.button-collapse.sidenav-trigger.show-on-large data-target='slide-out' data-turbolinks='false'
+            i.material-icons.right apps
+          .valign-wrapper
             h5.white-text Tapyrus Playground
 
     aside

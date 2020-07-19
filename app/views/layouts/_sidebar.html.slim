@@ -1,7 +1,13 @@
 ul#slide-out.sidenav
   li
-    a href="/commands"
-      i.material-icons local_atm
-      span Top
-  li
-    .divider
+    .blue-grey.darken-1.white-text Commands
+    ul.collapsible.collapsible-accordion
+      - Category.all.each do |category|
+        li
+          .collapsible-header = category.name
+          .collapsible-body
+            ul
+              - category.commands.each do |command|
+                li 
+                  = link_to command.name, command
+
