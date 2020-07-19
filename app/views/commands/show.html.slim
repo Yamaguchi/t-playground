@@ -26,17 +26,19 @@
   .row
     .col.s12.m12
       .card
-        .card-content 
+        .card-content
           - if flash[:result]
             .valign-wrapper.green-text
               i.material-icons done
               | Command was executed successfully.
-            = flash[:result]
+              i.clip.material-icons.right.grey-text[data-clipboard-target="#result" onclick="M.toast({html: 'Copied'})"] content_copy
+            p#result = flash[:result]
           - elsif flash[:error]
             .valign-wrapper.red-text
               i.material-icons close
               | Command execution failed.
-            = flash[:error]
+              i.clip.material-icons.right.grey-text[data-clipboard-target="#error" onclick="M.toast({html: 'Copied'})"] content_copy
+            p#error = flash[:error]
           - else
             .valign-wrapper.blue-text
               i.material-icons info

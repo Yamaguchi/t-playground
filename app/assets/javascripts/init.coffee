@@ -10,6 +10,8 @@ $(document).on 'turbolinks:load', ->
   instance = new M.Sidenav(elem, {}) if elem
 
 $(document).on 'turbolinks:load', ->
+  new ClipboardJS('.clip')
+
   Waves.displayEffect()
 
   # Reset
