@@ -17,6 +17,7 @@ test:
 
 production:
   <<: *default
+  schema: <%= ENV['TAPYRUS_RPC_SCHEMA'] %>
   host: <%= ENV['TAPYRUS_RPC_HOST'] %>
   port: <%= ENV['TAPYRUS_RPC_PORT'] %>
   user: <%= ENV['TAPYRUS_RPC_USER'] %>
